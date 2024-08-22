@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal Marks Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Internal Marks Calculator</h1>
+      <form id="marksForm">
+        <label for="assignment">Assignment-I Marks (out of 10):</label>
+        <input
+          type="number"
+          id="assignment"
+          name="assignment"
+          min="0"
+          max="10"
+          required
+        />
+
+        <label for="quiz">Mid-I Marks (out of 35):</label>
+        <input type="number" id="quiz" name="quiz" min="0" max="35" required />
+
+        <label for="participation">Assignment-II Marks (out of 10):</label>
+        <input
+          type="number"
+          id="participation"
+          name="participation"
+          min="0"
+          max="10"
+          required
+        />
+
+        <label for="project">Mid-II Marks (out of 35):</label>
+        <input
+          type="number"
+          id="project"
+          name="project"
+          min="0"
+          max="35"
+          required
+        />
+
+        <button type="button" onclick="calculateInternalMarks()">
+          Calculate
+        </button>
+      </form>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      function calculateInternalMarks() {
+        const assignment1 = parseFloat(
+          document.getElementById("assignment").value
+        );
+        const mid1 = parseFloat(document.getElementById("quiz").value);
+        const assignment2 = parseFloat(
+          document.getElementById("participation").value
+        );
+        const mid2 = parseFloat(document.getElementById("project").value);
+
+        if (
+          isNaN(assignment1) ||
+          isNaN(mid1) ||
+          isNaN(assignment2) ||
+          isNaN(mid2)
+        ) {
+          document.getElementById("result").textContent =
+            "Please enter valid numbers for all fields.";
+          return;
+        }
+
+        // Determine the maximum and minimum marks between Mid-I and Mid-II
+        let maxMid = Math.max(mid1, mid2);
+        let minMid = Math.min(mid1, mid2);
+
+        // Calculate weighted total
+        let t1 = (maxMid * 3) / 7;
+        let t2 = minMid / 7;
+
+        // Calculate average of assignments
+        let avgAssignments = (assignment1 + assignment2) / 2;
+
+        // Calculate total internal marks out of 30
+        let total = t1 + t2 + avgAssignments;
+
+        // Display the result
+        document.getElementById(
+          "result"
+        ).textContent = `Your total internal marks are: ${total.toFixed(
+          2
+        )} out of 30`;
+      }
+    </script>
+  </body>
+</html>
